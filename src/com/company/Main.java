@@ -24,24 +24,31 @@ public class Main {
 
         // Найти количество несовершеннолетних (т.е. людей младше 18 лет).
 
-       persons.stream().filter(person -> person.getAge() < 18).count();
+       long irrationality = persons.stream().filter(person -> person.getAge() < 18).count();
+        System.out.println("\n количество несовершеннолетних " + irrationality);
 
         // Получить список фамилий призывников (т.е. мужчин от 18 и до 27 лет).
 
-        persons.stream().filter(person -> (person.getAge() >= 18 && person.getAge() <= 27))
+        List<String> prisoners = persons.stream()
+                .filter(person -> (person.getAge() >= 18 && person.getAge() <= 27))
                 .filter(person -> person.getSex() == Sex.MAN).map(Person::getFamily)
                 .collect(Collectors.toList());
+        System.out.println("\n список фамилий призывников (т.е. мужчин от 18 и до 27 лет) " + prisoners);
 
         /* Получить отсортированный по фамилии список
         потенциально работоспособных людей с высшим образованием
         в выборке (т.е. людей с высшим образованием от 18 до 60 лет для
         женщин и до 65 лет для мужчин).*/
 
-        Collection<Person> ableBodied = persons.stream()
+        Collection<Person> capable = persons.stream()
                 .filter(person -> person.getEducation() == Education.HIGHER)
                 .filter(person -> person.getSex() == Sex.MAN ? person.getAge() >= 18 && person.getAge() <= 65
                         : person.getAge() >= 18 && person.getAge() <= 60)
                 .sorted(Comparator.comparing(Person::getFamily))
                 .collect(Collectors.toList());
+        System.out.println(" \n отсортированный по фамилии список\n" +
+                "        потенциально работоспособных людей с высшим образованием\n" +
+                "        в выборке (т.е. людей с высшим образованием от 18 до 60 лет для\n" +
+                "        женщин и до 65 лет для мужчин) " + capable);
     }
 }
